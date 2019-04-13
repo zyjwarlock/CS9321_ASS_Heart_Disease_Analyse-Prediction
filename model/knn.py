@@ -89,6 +89,7 @@ def train():
     plt.plot(d[0],d[1],"go")
     d=new_pca[new_df["age_stage"]==2]
     plt.plot(d[0],d[1],"b*")
+    plt.gcf().savefig('kmeans.png')
     plt.show()
 
 train()
