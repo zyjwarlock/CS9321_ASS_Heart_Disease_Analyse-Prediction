@@ -68,7 +68,7 @@ def q1():
 		(4, 1): 'thalassemia'
 	}
 
-	# q1_fig = tools.make_subplots(rows=4, cols=4)
+
 
 	q1_fig = plotly.tools.make_subplots(
 		rows=4,
@@ -106,16 +106,6 @@ def q1():
 		for f in trace.data:
 			q1_fig.append_trace(f, k[0], k[1])
 
-	# fig = ff.create_facet_grid(
-	#     q1_df,
-	#     x='age',
-	#     y='thalassemia',
-	#     color_name='sex',
-	#     show_boxes=False,
-	#     marker={'size': 10, 'opacity': 1.0},
-	#     colormap={'Male': 'rgb(165, 242, 242)', 'Female': 'rgb(253, 174, 216)'}
-	# )
-	# py.iplot(fig, filename='facet - custom colormap')
 
 	q1_fig['layout'].update(
 		height=550,
@@ -133,32 +123,18 @@ def q2():
 	values = [round(e[-1], 4) for e in importance]
 	phases = [e[0] for e in importance]
 
-	# color of each funnel section
-	# colors = ['rgb(32,155,160)', 'rgb(253,93,124)', 'rgb(28,119,139)', 'rgb(182,231,235)', 'rgb(35,154,160)']
 	colors = [
 		f'rgb({np.random.randint(0,255)},{np.random.randint(0,255)},{np.random.randint(0,255)})'
 		for i in range(5)
 	]
 	n_phase = len(phases)
 	plot_width = 300
-
-	# height of a section and difference between sections
 	section_h = 100
 	section_d = 10
-
-	# multiplication factor to calculate the width of other sections
 	unit_width = plot_width / max(values)
-
-	# width of each funnel section relative to the plot width
 	phase_w = [int(value * unit_width) for value in values]
-
-	# plot height based on the number of sections and the gap in between them
 	height = section_h * n_phase + section_d * (n_phase - 1)
-
-	# list containing all the plot shapes
 	shapes = []
-
-	# list containing the Y-axis location for each section's name and value text
 	label_y = []
 
 	for i in range(n_phase):
@@ -268,16 +244,6 @@ app.layout = html.Div(
 					[
 						html.Label('1. age'),
 						dcc.Input(id='age', value=50, type='number'),
-						#						dcc.Dropdown(
-						#							id='age',
-						#							options=[
-						#								{
-						#									'label': i,
-						#									'value': i
-						#								} for i in range(1880, 2018)
-						#							],
-						#							value='\t'
-						#						)
 					],
 					style={
 						'width': '250px',
@@ -289,7 +255,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('2. sex'),
-						#						dcc.Input(id='mother_birth', value=1952, type='number'),
 						dcc.Dropdown(
 							id='sex',
 							options=[
@@ -311,11 +276,9 @@ app.layout = html.Div(
 						'text-align': 'left'
 					}
 				),
-				# 'margin-left': '40px', 'text-align': 'center'}),
 				html.P(
 					[
 						html.Label('3. chest pain type'),
-						# dcc.Input(id='self_birth',value=1982, type='number'),
 						dcc.Dropdown(
 							id='chest_pain_type',
 							options=[
@@ -354,16 +317,6 @@ app.layout = html.Div(
 							value=131,
 							type='number'
 						),
-						#						dcc.Dropdown(
-						#							id='resting_blood_pressure',
-						#							options=[
-						#								{
-						#									'label': i,
-						#									'value': i
-						#								} for i in range(1940, 2006 + 1)
-						#							],
-						#							value='\t'
-						#						)
 					],
 					style={
 						'width': '250px',
@@ -376,19 +329,6 @@ app.layout = html.Div(
 					[
 						html.Label('5. serum cholestoral in mg/dl'),
 						dcc.Input(id='cholesterol', value=239, type='number'),
-						#						dcc.Dropdown(
-						#							id='cholesterol',
-						#							options=[
-						#								{
-						#									'label': 'Celsius',
-						#									'value': 'Celsius'
-						#								}, {
-						#									'label': 'Fahrenheit',
-						#									'value': 'Fahrenheit'
-						#								}
-						#							],
-						#							value='\t'
-						#						)
 					],
 					style={
 						'width': '250px',
@@ -400,7 +340,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('6. fasting blood sugar > 120 mg/dl'),
-						# dcc.Input(id='child_birth', value=0, type='number'),
 						dcc.Dropdown(
 							id='fasting_blood_sugar',
 							options=[
@@ -425,7 +364,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('7. resting electrocardiographic'),
-						# dcc.Input(id='child_birth', value=0, type='number'),
 						dcc.Dropdown(
 							id='rest_ecg',
 							options=[
@@ -460,19 +398,6 @@ app.layout = html.Div(
 							value=148,
 							type='number'
 						)
-						#						dcc.Dropdown(
-						#							id='max_heart_rate_achieved',
-						#							options=[
-						#								{
-						#									'label': 'Celsius',
-						#									'value': 'Celsius'
-						#								}, {
-						#									'label': 'Fahrenheit',
-						#									'value': 'Fahrenheit'
-						#								}
-						#							],
-						#							value='\t'
-						#						)
 					],
 					style={
 						'width': '250px',
@@ -484,7 +409,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('9. exercise induced angina'),
-						# dcc.Input(id='child_birth', value=0, type='number'),
 						dcc.Dropdown(
 							id='exercise_induced_angina',
 							options=[
@@ -510,19 +434,6 @@ app.layout = html.Div(
 					[
 						html.Label('10. ST depression'),
 						dcc.Input(id='st_depression', value=1, type='number')
-						#						dcc.Dropdown(
-						#							id='st_depression',
-						#							options=[
-						#								{
-						#									'label': 'Celsius',
-						#									'value': 'Celsius'
-						#								}, {
-						#									'label': 'Fahrenheit',
-						#									'value': 'Fahrenheit'
-						#								}
-						#							],
-						#							value='\t'
-						#						)
 					],
 					style={
 						'width': '250px',
@@ -534,7 +445,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('11. ST slope'),
-						# dcc.Input(id='child_birth', value=0, type='number'),
 						dcc.Dropdown(
 							id='st_slope',
 							options=[
@@ -556,7 +466,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('12. number of major vessels'),
-						# dcc.Input(id='child_birth', value=0, type='number'),
 						dcc.Dropdown(
 							id='num_major_vessels',
 							options=[
@@ -578,7 +487,6 @@ app.layout = html.Div(
 				html.P(
 					[
 						html.Label('13. thalassemia'),
-						# dcc.Input(id='child_birth', value=0, type='number'),
 						dcc.Dropdown(
 							id='thalassemia',
 							options=[
