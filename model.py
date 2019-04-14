@@ -2,9 +2,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import LeaveOneOut, cross_val_score
+from sklearn.model_selection import LeaveOneOut, cross_val_score, StratifiedKFold, GridSearchCV
 from sklearn.externals import joblib
 from sklearn import svm
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 from collections import defaultdict
 from sklearn.datasets import make_classification
@@ -12,6 +13,9 @@ from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.model_selection import ShuffleSplit
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score
+from sklearn.decomposition import PCA
+from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 #import eli5
 #from eli5.sklearn import PermutationImportance
 
@@ -110,8 +114,46 @@ class MyModel:
 			return Ranking
 		return Ranking[:top]
 
+	def bonus(self, neighbours = 40):
+		X, y = self._get_data()
+		
+		new_features = [e[0] for e in self.feature_importance(top = 8)]
+		X = X[new_features]
+		
+		skf = StratifiedKFold(n_splits=10, shuffle=True, random_state=5)
+
+		scaler = StandardScaler().fit(X)
+		X_scaled = scaler.transform(X)
+
+		knn_params = {'n_neighbors': range(1, neighbours) }
+
+		knn_grid = GridSearchCV(KNeighborsClassifier(), knn_params, cv=skf)
+		knn_grid.fit(X_scaled, y);
+
+
+		score = cross_val_score(knn_grid.best_estimator_, X_scaled, y, cv=skf)
+#		print(X_scaled.shape)
+#		print(score.mean())
+		L = [(i, knn_grid.cv_results_['mean_test_score'][i-1]) for i in range(1,neighbours)]
+#		print(knn_grid.cv_results_)
+		return L
+		
+		
+#	def bonus(self):
+#		X, y = self._get_data()
+#		pca = PCA(7).fit(X)
+#		X_pca = pca.transform(X)
+#		svm = SVC(C=2, gamma=0.125, kernel='linear')
+#		svm.fit(X_pca, y)
+#
+#		score = cross_val_score(svm, X_pca, y, cv=10)
+#		print(score.mean())
 
 #mm = MyModel()
 #print(mm.feature_importance(top = 5))
 #x = [56.0,1.0,3.0,130.0,256.0,1.0,2.0,142.0,1.0,0.6,2.0,1.0,6.0]
-#print(mm.predict(x))
+#for _ in mm.bonus():
+#	print(_)
+#print(mm.bonus())
+	
+
