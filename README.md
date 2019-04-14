@@ -23,7 +23,7 @@ Project structure:
 
 2. For graphing part, we used **Plotly**. On one hand it could draw *interactive* plots easily, instead of  just statical picture(matplotlib). Another reason is that the Plotly code is compatible with DASH code. Which is much more efficient for this project.
 
-3. Loose coupling is also a key factor in this project. Hence machine learning model here is wrapped as a class to keep structures  isolated. 
+3. Loose coupling is also a key factor in this project. Hence machine learning model here is wrapped as a class to keep structures  isolated. **Firstly it will detect whether model mymodel.pkl exists, if not, it will generate a new model.**
 
    1. Using Random Forest Algorithm to avoid overfitting and also performances well on large feature datasets. Also, when initilizating model instance, users can choose boosting or svm algorithms. All of them are initilized with optimal parameters(GridSearch) .
 
