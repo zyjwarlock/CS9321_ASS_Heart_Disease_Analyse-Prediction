@@ -1,5 +1,7 @@
 # COMP9321-Assignment 3
 
+[Project Specification](https://github.com/zyjwarlock/CS9321_ASS_Heart_Disease_Analyse-Prediction/blob/master/9321_Group_Project.pdf)
+
 Project structure:
 
 ![M](https://ws3.sinaimg.cn/large/006tNc79ly1g224rfckx4j319w0lwmzp.jpg)
